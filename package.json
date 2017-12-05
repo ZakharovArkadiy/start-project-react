@@ -8,10 +8,11 @@
   "license": "MIT",
   "private": null,
   "scripts": {
-    "start": "webpack --env development",
+    "start": "webpack --env.development",
     "build": "webpack --env.production"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.17",
     "webpack": "^3.10.0",
     "webpack-merge": "^4.1.1"
   }
