@@ -6,5 +6,13 @@
   "repository": "https://github.com/ZakharovArkadiy/start-project-react.git",
   "author": "Arkadiy Zarharov",
   "license": "MIT",
-  "private": null
+  "private": null,
+  "scripts": {
+    "start": "webpack --env development",
+    "build": "webpack --env.production"
+  },
+  "devDependencies": {
+    "webpack": "^3.10.0",
+    "webpack-merge": "^4.1.1"
+  }
 }
