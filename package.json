@@ -9,10 +9,15 @@
   "private": null,
   "scripts": {
     "start": "webpack --env.development",
-    "build": "webpack --env.production"
+    "build": "webpack --env.production",
+    "server": "static public"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.17",
+    "html-webpack-plugin": "^2.30.1",
+    "node-static": "^0.7.10",
+    "pug": "^2.0.0-rc.4",
+    "pug-loader": "^2.3.0",
     "webpack": "^3.10.0",
     "webpack-merge": "^4.1.1"
   }

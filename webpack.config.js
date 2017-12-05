@@ -4,7 +4,10 @@
 const webpack            = require('webpack');
 const merge              = require('webpack-merge');
 const path               = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin  = require('html-webpack-plugin')
+
+const PugToHtml          = require('./webpack/PugToHtml');
 
 const PATHS = {
   source: path.join(__dirname, 'source'),
@@ -12,7 +15,7 @@ const PATHS = {
 };
 
 // Basic settings webpack
-const CONFIG = (env) => {
+const CONFIG = env => {
 
   const NODE_ENV = (env.production) ? "production" : "development";
 
@@ -30,10 +33,25 @@ const CONFIG = (env) => {
       }),
       new CleanWebpackPlugin(
         ["public"]
-      )
+      ),
+      new HtmlWebpackPlugin({
+        template: PATHS.source + '/views/index.pug'
+      })
     ]
   };
 
 }; // end of basic settings webpack
 
-module.exports = CONFIG;
+module.exports = (env) => {
+  if (env.production) {
+    return merge(
+      CONFIG(env),
+      PugToHtml()
+    );
+  } else {
+    return merge(
+      CONFIG(env),
+      PugToHtml()
+    );
+  }
+};
