@@ -9,7 +9,7 @@ const HtmlWebpackPlugin  = require("html-webpack-plugin");
 
 const PugToHtml          = require("./webpack/PugToHtml");
 const UglifyJsPlugin     = require("./webpack/UglifyJsPlugin");
-const styles             = require("./webpack/styles");
+const StyleLoader             = require("./webpack/StyleLoader");
 
 const PATHS = {
   source: path.join(__dirname, "source"),
@@ -50,7 +50,12 @@ const CONFIG = env => {
       new HtmlWebpackPlugin({
         template: PATHS.source + "/views/index.pug"
       })
-    ]
+    ],
+    devServer: {
+      contentBase: path.join(__dirname, "public"),
+      compress: true,
+      port: 9000
+    }
   };
 
 }; // end of basic settings webpack
@@ -61,13 +66,13 @@ module.exports = (env) => {
       CONFIG(env),
       UglifyJsPlugin(),
       PugToHtml(),
-      styles()
+      StyleLoader()
     );
   } else {
     return merge(
       CONFIG(env),
       PugToHtml(),
-      styles()
+      StyleLoader()
     );
   }
 };

@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": null,
   "scripts": {
-    "start": "webpack --env.development",
+    "start": "webpack-dev-server --env.development",
     "build": "webpack --env.production",
     "server": "static public"
   },
@@ -30,6 +30,7 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
     "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.5",
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {}
