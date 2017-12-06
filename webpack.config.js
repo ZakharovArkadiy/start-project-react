@@ -11,6 +11,7 @@ const UglifyJsPlugin     = require("./webpack/UglifyJsPlugin");
 const CleanWebpackPlugin = require("./webpack/CleanWebpackPlugin");
 const StyleLoader        = require("./webpack/StyleLoader");
 const URLLoader          = require("./webpack/URLLoader");
+const JSONLoader         = require("./webpack/JSONLoader");
 
 const PATHS = {
   source: path.join(__dirname, "source"),
@@ -66,14 +67,16 @@ module.exports = env => {
       UglifyJsPlugin(),
       PugToHtml(),
       StyleLoader(),
-      URLLoader()
+      URLLoader(),
+      JSONLoader()
     );
   } else {
     return merge(
       CONFIG(env),
       PugToHtml(),
       StyleLoader(),
-      URLLoader()
+      URLLoader(),
+      JSONLoader()
     );
   }
 };
