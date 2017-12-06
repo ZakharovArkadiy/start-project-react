@@ -20,7 +20,7 @@ const PATHS = {
 const CONFIG = env => {
 
   const NODE_ENV   = env.production ? "production" : "development";
-  const SOURCE_MAP = !env.production ? "cheap-module-eval-source-map" : false;
+  const SOURCE_MAP = !env.production ? "inline-source-map" : false;
 
   return {
     entry: {
@@ -59,8 +59,8 @@ module.exports = (env) => {
   if (env.production) {
     return merge(
       CONFIG(env),
-      PugToHtml(),
       UglifyJsPlugin(),
+      PugToHtml(),
       styles()
     );
   } else {

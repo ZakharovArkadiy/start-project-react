@@ -10,13 +10,16 @@ module.exports = function(paths) {
           use: ExtractTextPlugin.extract({
             publicPath: "../",
             fallback: "style-loader",
-            use: ["css-loader", "sass-loader"]
+            use: [
+              {loader: "css-loader", options: {sourceMap: true}},
+              {loader: "sass-loader", options: {sourceMap: true}}
+            ]
           })
         }
       ]
     },
     plugins: [
-      new ExtractTextPlugin("./css/[name].css")
+      new ExtractTextPlugin("./css/[name].[contenthash].css")
     ]
   };
 };

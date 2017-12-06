@@ -2,7 +2,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import './main.sass';
+import "./main.sass";
 
 console.log(process.env.NODE_ENV);
 
