@@ -1,41 +1,54 @@
 // WEBPACK CONFIG FILE
 "use strict";
 
-const webpack            = require('webpack');
-const merge              = require('webpack-merge');
-const path               = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin  = require('html-webpack-plugin')
+const webpack            = require("webpack");
+const merge              = require("webpack-merge");
+const path               = require("path");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const HtmlWebpackPlugin  = require("html-webpack-plugin");
 
-const PugToHtml          = require('./webpack/PugToHtml');
+const PugToHtml          = require("./webpack/PugToHtml");
+const UglifyJsPlugin     = require("./webpack/UglifyJsPlugin");
+const styles             = require("./webpack/styles");
 
 const PATHS = {
-  source: path.join(__dirname, 'source'),
-  public: path.join(__dirname, 'public')
+  source: path.join(__dirname, "source"),
+  public: path.join(__dirname, "public")
 };
 
 // Basic settings webpack
 const CONFIG = env => {
 
-  const NODE_ENV = (env.production) ? "production" : "development";
+  const NODE_ENV   = env.production ? "production" : "development";
+  const SOURCE_MAP = !env.production ? "cheap-module-eval-source-map" : false;
 
   return {
     entry: {
-      index: PATHS.source + '/index.js'
+      index: PATHS.source + "/index.js"
     },
     output: {
       path: PATHS.public,
-      filename: '[name].[chunkhash].js'
+      filename: "./js/[name].[chunkhash].js"
     },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          loader: "babel-loader"
+        }
+      ]
+    },
+    devtool: SOURCE_MAP,
     plugins: [
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
       }),
       new CleanWebpackPlugin(
-        ["public"]
+        ["public/js", "public/css"]
       ),
       new HtmlWebpackPlugin({
-        template: PATHS.source + '/views/index.pug'
+        template: PATHS.source + "/views/index.pug"
       })
     ]
   };
@@ -46,12 +59,15 @@ module.exports = (env) => {
   if (env.production) {
     return merge(
       CONFIG(env),
-      PugToHtml()
+      PugToHtml(),
+      UglifyJsPlugin(),
+      styles()
     );
   } else {
     return merge(
       CONFIG(env),
-      PugToHtml()
+      PugToHtml(),
+      styles()
     );
   }
 };
