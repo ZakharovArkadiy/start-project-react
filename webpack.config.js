@@ -5,10 +5,10 @@ const webpack            = require("webpack");
 const merge              = require("webpack-merge");
 const path               = require("path");
 const HtmlWebpackPlugin  = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 const PugToHtml          = require("./webpack/PugToHtml");
 const UglifyJsPlugin     = require("./webpack/UglifyJsPlugin");
-const CleanWebpackPlugin = require("./webpack/CleanWebpackPlugin");
 const StyleLoader        = require("./webpack/StyleLoader");
 const URLLoader          = require("./webpack/URLLoader");
 const JSONLoader         = require("./webpack/JSONLoader");
@@ -43,6 +43,9 @@ const CONFIG = env => {
     },
     devtool: SOURCE_MAP,
     plugins: [
+      new CleanWebpackPlugin(
+        ["public"]
+      ),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(NODE_ENV)
       }),
@@ -63,7 +66,6 @@ module.exports = env => {
   if (env.production) {
     return merge(
       CONFIG(env),
-      CleanWebpackPlugin(),
       UglifyJsPlugin(),
       PugToHtml(),
       StyleLoader(),

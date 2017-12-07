@@ -1,10 +1,13 @@
 import React    from "react";
 import ReactDOM from "react-dom";
 
-import "./main.sass";
+import "./sass/main.sass";
 
 ReactDOM.render(
-  <h1>Hello,world!</h1>,
+  <div id="wrapper">
+    <div id="flag"></div>
+    <h1>Hello,world!</h1>
+  </div>,
   document.getElementById("root")
 );
 
